@@ -4,8 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, 我的博客">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="LRU算法实现, 我的博客">
+    <meta name="description" content="概念
+LRU是Least Recently Used 近期最少使用算法。 内存管理的一种页面置换算法，对于在内存中但又不用的数据块（内存块）叫做LRU，操作系统会根据哪些数据属于LRU而将其移出内存而腾出空间来加载另外的数据。什么是LRU算">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +20,7 @@
 
     
 
-    <title>Hello World | 我的博客</title>
+    <title>LRU算法实现 | 我的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -311,12 +312,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">LRU算法实现</h1>
                 </div>
             </div>
         </div>
@@ -430,9 +431,17 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+                                <span class="chip bg-color">操作系统</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -444,7 +453,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-04-16
+                    2022-09-13
                 </div>
                 
 
@@ -468,23 +477,74 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><blockquote>
+<p>LRU是Least Recently Used 近期最少使用算法。 内存管理的一种页面置换算法，对于在内存中但又不用的数据块（内存块）叫做LRU，操作系统会根据哪些数据属于LRU而将其移出内存而腾出空间来加载另外的数据。什么是LRU算法？ LRU是Least Recently Used的缩写，即最近最久未使用，常用于页面置换算法，是为虚拟页式存储管理服务的。关于操作系统的内存管理，如何节省利用容量不大的内存为最多的进程提供资源，一直是研究的重要方向。而内存的虚拟存储管理，是现在最通用，最成功的方式—— 在内存有限的情况下，扩展一部分外存作为虚拟内存，真正的内存只存储当前运行时所用得到信息。这无疑极大地扩充了内存的功能，极大地提高了计算机的并发度。虚拟页式存储管理，则是将进程所需空间划分为多个页面，内存中只存放当前所需页面，其余页面放入外存的管理方式。然而，有利就有弊，虚拟页式存储管理减少了进程所需的内存空间，却也带来了运行时间变长这一缺点：进程运行过程中，不可避免地要把在外存中存放的一些信息和内存中已有的进行交换，由于外存的低速，这一步骤所花费的时间不可忽略。因而，采取尽量好的算法以减少读取外存的次数，也是相当有意义的事情。百度百科</p>
+</blockquote>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">type</span> LRUCache <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	capacity <span class="token builtin">int</span>
+	lruMap <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token operator">*</span>DLinkNode
+	head<span class="token punctuation">,</span> tail <span class="token operator">*</span>DLinkNode
+<span class="token punctuation">}</span>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<span class="token keyword">type</span> DLinkNode <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	key<span class="token punctuation">,</span> value <span class="token builtin">int</span>
+	pre<span class="token punctuation">,</span> next <span class="token operator">*</span>DLinkNode
+<span class="token punctuation">}</span>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<span class="token keyword">func</span> <span class="token function">Constructor</span><span class="token punctuation">(</span>capacity <span class="token builtin">int</span><span class="token punctuation">)</span> LRUCache <span class="token punctuation">{</span>
+	cache <span class="token operator">:=</span> LRUCache<span class="token punctuation">{</span>
+		capacity<span class="token punctuation">:</span> capacity<span class="token punctuation">,</span>
+		head<span class="token punctuation">:</span> <span class="token operator">&amp;</span>DLinkNode<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+		tail<span class="token punctuation">:</span> <span class="token operator">&amp;</span>DLinkNode<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+		lruMap<span class="token punctuation">:</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token operator">*</span>DLinkNode<span class="token punctuation">)</span><span class="token punctuation">,</span>
+	<span class="token punctuation">}</span>
+	cache<span class="token punctuation">.</span>head<span class="token punctuation">.</span>next <span class="token operator">=</span> cache<span class="token punctuation">.</span>tail
+	cache<span class="token punctuation">.</span>tail<span class="token punctuation">.</span>pre <span class="token operator">=</span> cache<span class="token punctuation">.</span>head
+	<span class="token keyword">return</span> cache
+<span class="token punctuation">}</span>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">hexo clean   <span class="token comment">#清除缓存文件 db.json 和已生成的静态文件 public</span>
-hexo g       <span class="token comment">#生成网站静态文件到默认设置的 public 文件夹(hexo generate 的缩写)</span>
-hexo d       <span class="token comment">#自动生成网站静态文件，并部署到设定的仓库(hexo deploy 的缩写)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>this <span class="token operator">*</span>LRUCache<span class="token punctuation">)</span> <span class="token function">Get</span><span class="token punctuation">(</span>key <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+	<span class="token keyword">if</span> <span class="token boolean">_</span><span class="token punctuation">,</span> ok <span class="token operator">:=</span> this<span class="token punctuation">.</span>lruMap<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token operator">!</span>ok <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>
+	<span class="token punctuation">}</span>
+	this<span class="token punctuation">.</span><span class="token function">DelNode</span><span class="token punctuation">(</span>this<span class="token punctuation">.</span>lruMap<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span>
+	this<span class="token punctuation">.</span><span class="token function">AddNodeToHead</span><span class="token punctuation">(</span>this<span class="token punctuation">.</span>lruMap<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span>
+	<span class="token keyword">return</span> this<span class="token punctuation">.</span>lruMap<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">.</span>value
+<span class="token punctuation">}</span>
 
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>this <span class="token operator">*</span>LRUCache<span class="token punctuation">)</span> <span class="token function">Put</span><span class="token punctuation">(</span>key <span class="token builtin">int</span><span class="token punctuation">,</span> value <span class="token builtin">int</span><span class="token punctuation">)</span>  <span class="token punctuation">{</span>
+	<span class="token keyword">if</span> <span class="token boolean">_</span><span class="token punctuation">,</span> ok <span class="token operator">:=</span> this<span class="token punctuation">.</span>lruMap<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token operator">!</span>ok <span class="token punctuation">{</span>
+		node <span class="token operator">:=</span> <span class="token operator">&amp;</span>DLinkNode<span class="token punctuation">{</span>key<span class="token punctuation">:</span> key<span class="token punctuation">,</span> value<span class="token punctuation">:</span> value<span class="token punctuation">}</span>
+		this<span class="token punctuation">.</span>lruMap<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> node
+		this<span class="token punctuation">.</span><span class="token function">AddNodeToHead</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span>
+		<span class="token keyword">if</span> <span class="token function">len</span><span class="token punctuation">(</span>this<span class="token punctuation">.</span>lruMap<span class="token punctuation">)</span> <span class="token operator">&gt;</span> this<span class="token punctuation">.</span>capacity <span class="token punctuation">{</span>
+			<span class="token function">delete</span><span class="token punctuation">(</span>this<span class="token punctuation">.</span>lruMap<span class="token punctuation">,</span> this<span class="token punctuation">.</span>tail<span class="token punctuation">.</span>pre<span class="token punctuation">.</span>key<span class="token punctuation">)</span>
+			this<span class="token punctuation">.</span><span class="token function">DelTailNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	this<span class="token punctuation">.</span>lruMap<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value
+	this<span class="token punctuation">.</span><span class="token function">DelNode</span><span class="token punctuation">(</span>this<span class="token punctuation">.</span>lruMap<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span>
+	this<span class="token punctuation">.</span><span class="token function">AddNodeToHead</span><span class="token punctuation">(</span>this<span class="token punctuation">.</span>lruMap<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>this <span class="token operator">*</span>LRUCache<span class="token punctuation">)</span> <span class="token function">AddNodeToHead</span><span class="token punctuation">(</span>node <span class="token operator">*</span>DLinkNode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	this<span class="token punctuation">.</span>head<span class="token punctuation">.</span>next<span class="token punctuation">.</span>pre <span class="token operator">=</span> node
+	node<span class="token punctuation">.</span>next <span class="token operator">=</span> this<span class="token punctuation">.</span>head<span class="token punctuation">.</span>next
+	this<span class="token punctuation">.</span>head<span class="token punctuation">.</span>next <span class="token operator">=</span> node
+	node<span class="token punctuation">.</span>pre <span class="token operator">=</span> this<span class="token punctuation">.</span>head
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>this <span class="token operator">*</span>LRUCache<span class="token punctuation">)</span> <span class="token function">DelNode</span><span class="token punctuation">(</span>node <span class="token operator">*</span>DLinkNode<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	node<span class="token punctuation">.</span>pre<span class="token punctuation">.</span>next <span class="token operator">=</span> node<span class="token punctuation">.</span>next
+	node<span class="token punctuation">.</span>next<span class="token punctuation">.</span>pre <span class="token operator">=</span> node<span class="token punctuation">.</span>pre
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>this <span class="token operator">*</span>LRUCache<span class="token punctuation">)</span> <span class="token function">DelTailNode</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token punctuation">{</span>
+	this<span class="token punctuation">.</span><span class="token function">DelNode</span><span class="token punctuation">(</span>this<span class="token punctuation">.</span>tail<span class="token punctuation">.</span>pre<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -510,7 +570,7 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://RookieECJTU.github.io/2022/04/16/hello-world/">http://RookieECJTU.github.io/2022/04/16/hello-world/</a>
+                    <a href="http://RookieECJTU.github.io/2022/09/13/lru-suan-fa-shi-xian/">http://RookieECJTU.github.io/2022/09/13/lru-suan-fa-shi-xian/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -547,7 +607,15 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+                                    <span class="chip bg-color">操作系统</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -723,13 +791,13 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/05/06/osi-can-kao-mo-xing-he-xie-yi-fen-ceng/">
+                <a href="/2022/09/18/go-de-gc/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="OSI七层模型">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Go的GC">
                         
-                        <span class="card-title">OSI七层模型</span>
+                        <span class="card-title">Go的GC</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -740,7 +808,7 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-05-06
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-18
                         </span>
                         <span class="publish-author">
                             
@@ -753,8 +821,8 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
-                        <span class="chip bg-color">计算机网络</span>
+                    <a href="/tags/Go/">
+                        <span class="chip bg-color">Go</span>
                     </a>
                     
                 </div>
@@ -765,16 +833,16 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/04/16/hello-world/">
+                <a href="/2022/09/13/top-k-de-liang-chong-jing-dian-jie-fa-dui-kuai-pai-yu-you-lie-bi-jiao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Top K的两种经典解法（堆/快排）与优劣比较">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">Top K的两种经典解法（堆/快排）与优劣比较</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -785,7 +853,7 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-16
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-13
                             </span>
                         <span class="publish-author">
                             
@@ -795,7 +863,14 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>

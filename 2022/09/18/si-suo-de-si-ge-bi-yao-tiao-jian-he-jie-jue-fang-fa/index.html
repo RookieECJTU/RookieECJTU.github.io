@@ -4,8 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, 我的博客">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="死锁的四个必要条件和解决方法, 我的博客">
+    <meta name="description" content="死锁概念和产生原理概念：多个并发进程争夺系统资源而产生相互等待的现象原理：当一组进程中的每个进程都在等待某个事件发生，而只有这组进程中的其他进程才能触发该事件，这就称这组进程发生了死锁本质原因：
+
+系统资源有限
+进程推进顺序不合理
+资源分配">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +23,7 @@
 
     
 
-    <title>Hello World | 我的博客</title>
+    <title>死锁的四个必要条件和解决方法 | 我的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -311,12 +315,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">死锁的四个必要条件和解决方法</h1>
                 </div>
             </div>
         </div>
@@ -430,9 +434,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+                                <span class="chip bg-color">操作系统</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -444,7 +452,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-04-16
+                    2022-09-18
                 </div>
                 
 
@@ -468,22 +476,41 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">hexo clean   <span class="token comment">#清除缓存文件 db.json 和已生成的静态文件 public</span>
-hexo g       <span class="token comment">#生成网站静态文件到默认设置的 public 文件夹(hexo generate 的缩写)</span>
-hexo d       <span class="token comment">#自动生成网站静态文件，并部署到设定的仓库(hexo deploy 的缩写)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+                <h2 id="死锁概念和产生原理"><a href="#死锁概念和产生原理" class="headerlink" title="死锁概念和产生原理"></a>死锁概念和产生原理</h2><p><strong>概念</strong>：多个并发进程争夺系统资源而产生相互等待的现象<br><strong>原理</strong>：当一组进程中的每个进程都在等待某个事件发生，而只有这组进程中的其他进程才能触发该事件，这就称这组进程发生了死锁<br><strong>本质原因</strong>：</p>
+<ol>
+<li>系统资源有限</li>
+<li>进程推进顺序不合理</li>
+<li>资源分配不合理</li>
+</ol>
+<h2 id="死锁产生的4个必要条件"><a href="#死锁产生的4个必要条件" class="headerlink" title="死锁产生的4个必要条件"></a>死锁产生的4个必要条件</h2><ol>
+<li><strong>互斥</strong>：某种资源一次只允许一个进程访问，即该资源一旦分配给某个进程，其他进程就不能再访问，直到该进程访问结束</li>
+<li><strong>占有且等待</strong>：一个进程本身占有资源（一种或多种），同时还有资源未得到满足，正在等待其他进程释放该资源</li>
+<li><strong>不可抢占</strong>：别人占有了某项资源，你不能因为自己也要该资源，就去把别人的资源抢过来</li>
+<li><strong>循环等待</strong>：若干进程之间形成一种头尾相接的循环等待资源关系(比如一个进程集合，A在等B，B在等C，C在等A)</li>
+</ol>
+<h2 id="死锁预防"><a href="#死锁预防" class="headerlink" title="死锁预防"></a>死锁预防</h2><p> 产生死锁需要四个条件，那么，只要这四个条件中至少有一个条件得不到满足，就不可能发生死锁了。由于互斥条件是非共享资源所必须的，不仅不能改变，还应加以保证，所以，主要是破坏产生死锁的其他三个条件。</p>
+<ol>
+<li>破坏“占有且等待”条件<br> 方法1：所有的进程在开始运行之前，必须一次性地申请其在整个运行过程中所需要的全部资源。<br> 优点：简单易实施且安全。<br> 缺点：因为某项资源不满足，进程无法启动，而其他已经满足了的资源也不会得到利用，严重降低了资源的利用率，造成资源浪费。<br>          使进程经常发生饥饿现象。<br> 方法2：该方法是对第一种方法的改进，允许进程只获得运行初期需要的资源，便开始运行，在运行过程中逐步释放掉分配到的已经使用完毕的资源，然后再去请求新的资源。这样的话，资源的利用率会得到提高，也会减少进程的饥饿问题。</li>
+<li>破坏“不可抢占”条件</li>
+<li>当一个已经持有了一些资源的进程在提出新的资源请求没有得到满足时，它必须释放已经保持的所有资源，待以后需要使用的时候再重新申请。这就意味着进程已占有的资源会被短暂地释放或者说是被抢占了。<br>  该种方法实现起来比较复杂，且代价也比较大。释放已经保持的资源很有可能会导致进程之前的工作实效等，反复的申请和释放资源会导致进程的执行被无限的推迟，这不仅会延长进程的周转周期，还会影响系统的吞吐量。</li>
+<li>破坏“循环等待”条件<br>采用资源有序分配,将系统中的所有资源顺序编号，将紧缺的，稀少的资源采用较大的编号（一个进程只有获得较小编号的进程才能申请较大编号的进程）</li>
+</ol>
+<h2 id="避免死锁"><a href="#避免死锁" class="headerlink" title="避免死锁"></a>避免死锁</h2><p>死锁避免是利用额外的检验信息，在分配资源时判断是否会出现死锁，只在不会出现死锁的情况下才分配资源。<br>两种避免办法：<br>    1、如果一个进程的请求会导致死锁，则不启动该进程<br>    2、如果一个进程的增加资源请求会导致死锁 ，则拒绝该申请。<br>避免死锁的具体实现通常利用银行家算法</p>
+<blockquote>
+<p><strong>银行家算法</strong><br>银行家算法的相关数据结构<br>    <strong>可利用资源向量Available</strong>：用于表示系统里边各种资源剩余的数目。由于系统里边拥有的资源通常都是有很多种（假设有m种），所以，我们用一个有m个元素的数组来表示各种资源。数组元素的初始值为系统里边所配置的该类全部可用资源的数目，其数值随着该类资源的分配与回收动态地改变。<br>    <strong>最大需求矩阵Max</strong>：用于表示各个进程对各种资源的额最大需求量。进程可能会有很多个（假设为n个），那么，我们就可以用一个nxm的矩阵来表示各个进程多各种资源的最大需求量<br>    <strong>分配矩阵Allocation</strong>：顾名思义，就是用于表示已经分配给各个进程的各种资源的数目。也是一个nxm的矩阵。<br>    <strong>需求矩阵Need</strong>：用于表示进程仍然需要的资源数目，用一个nxm的矩阵表示。系统可能没法一下就满足了某个进程的最大需求（通常进程对资源的最大需求也是只它在整个运行周期中需要的资源数目，并不是每一个时刻都需要这么多），于是，为了进程的执行能够向前推进，通常，系统会先分配个进程一部分资源保证进程能够执行起来。那么，进程的最大需求减去已经分配给进程的数目，就得到了进程仍然需要的资源数目了。</p>
+</blockquote>
+<p>死锁避免的优点：不需要死锁预防中的抢占和重新运行进程，并且比死锁预防的限制要少。<br>死锁避免的限制：<br>    - 必须事先声明每个进程请求的最大资源量<br>    - 考虑的进程必须无关的，也就是说，它们执行的顺序必须没有任何同步要求的限制<br>    - 分配的资源数目必须是固定的。<br>    - 在占有资源时，进程不能退出</p>
+<h2 id="死锁解除"><a href="#死锁解除" class="headerlink" title="死锁解除"></a>死锁解除</h2><ol>
+<li>抢占资源：从一个或多个进程中抢占足够数量的资源分配给死锁进程，以解除死锁状态。</li>
+<li>终止（或撤销）进程：终止或撤销系统中的一个或多个死锁进程，直至打破死锁状态。<ul>
+<li>终止所有的死锁进程。这种方式简单粗暴，但是代价很大，很有可能会导致一些已经运行了很久的进程前功尽弃。</li>
+<li>逐个终止进程，直至死锁状态解除。该方法的代价也很大，因为每终止一个进程就需要使用死锁检测来检测系统当前是否处于死锁状态。另外，每次终止进程的时候终止那个进程呢？每次都应该采用最优策略来选择一个“代价最小”的进程来解除死锁状态。一般根据如下几个方面来决定终止哪个进程：<blockquote>
+<p>进程的优先级<br> 进程已运行时间以及运行完成还需要的时间<br> 进程已占用系统资源<br> 进程运行完成还需要的资源<br> 终止进程数目<br> 进程是交互还是批处理</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
 
                 
             </div>
@@ -510,7 +537,7 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://RookieECJTU.github.io/2022/04/16/hello-world/">http://RookieECJTU.github.io/2022/04/16/hello-world/</a>
+                    <a href="http://RookieECJTU.github.io/2022/09/18/si-suo-de-si-ge-bi-yao-tiao-jian-he-jie-jue-fang-fa/">http://RookieECJTU.github.io/2022/09/18/si-suo-de-si-ge-bi-yao-tiao-jian-he-jie-jue-fang-fa/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -547,7 +574,11 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+                                    <span class="chip bg-color">操作系统</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -723,13 +754,13 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/05/06/osi-can-kao-mo-xing-he-xie-yi-fen-ceng/">
+                <a href="/2022/09/19/linux-chang-yong-ming-ling/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="OSI七层模型">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="linux常用命令">
                         
-                        <span class="card-title">OSI七层模型</span>
+                        <span class="card-title">linux常用命令</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -740,7 +771,7 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-05-06
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-19
                         </span>
                         <span class="publish-author">
                             
@@ -753,8 +784,8 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
-                        <span class="chip bg-color">计算机网络</span>
+                    <a href="/tags/linux/">
+                        <span class="chip bg-color">linux</span>
                     </a>
                     
                 </div>
@@ -765,16 +796,16 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/04/16/hello-world/">
+                <a href="/2022/09/18/golang-diao-du-qi-gmp-yuan-li/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Golang调度器GMP原理">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">Golang调度器GMP原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -785,7 +816,7 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-16
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-18
                             </span>
                         <span class="publish-author">
                             
@@ -795,7 +826,6 @@ hexo d       <span class="token comment">#自动生成网站静态文件，并�
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
